@@ -11,6 +11,7 @@ class SSHComs:
         self.password = password
 
     def In(self, command):
+        print('Establishing connection to ', self.user, '@', self.ip, sep='')
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((self.ip, 22))
 
@@ -27,4 +28,5 @@ class SSHComs:
             size, data = channel.read()
 
         channel.close()
-        print("Exit Status: {0}".format(channel.get_exit_status()))
+        print("Exiting with Status: {0}".format(channel.get_exit_status()))
+        print()

@@ -11,7 +11,7 @@ class CVECheck:
         data = r.json()
         self.totalResults = int(json.dumps(data['totalResults']))
 
-        url = f'https://services.nvd.nist.gov/rest/json/cves/1.0?cpeMatchString=cpe:2.3:*:*:{self.name}:{self.ver}&resultsPerPage={self.totalResults}'
+        self.url = f'https://services.nvd.nist.gov/rest/json/cves/1.0?cpeMatchString=cpe:2.3:*:*:{self.name}:{self.ver}&resultsPerPage={self.totalResults}'
         r = requests.get(url)
         data = r.json()
         self.IDList = []
