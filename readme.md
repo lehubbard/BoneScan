@@ -8,5 +8,5 @@ Bone scan is a vulnerability scanner that offers users a detailed information on
 1. Connect your BeagleBoard to the same subnet as your administrative device.
 1. On the administrative device, run BoneScan.py as shown below.
 
-    python BoneScan.py -i {ip address of BeagleBoard} -u {username of BeagleBoard}
+'''python BoneScan.py -i {ip address of BeagleBoard} -u {username of BeagleBoard}'''
 1. The scan may take a while. Once it is complete, the report will be saved as an html file in the report directory.
