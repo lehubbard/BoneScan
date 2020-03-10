@@ -1,4 +1,4 @@
-![logo](./report/logo.png)
+![newlogo](./report/logo.png)
 # BoneScan
 ## A vulnerability scanner for the BeagleBoard
 
