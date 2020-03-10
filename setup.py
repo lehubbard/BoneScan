@@ -17,6 +17,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Operating System :: Linux",
     ],
-    install_requires=['requests', 'ssh2', 'socket', 'getpass', 'argparse', 'datetime'],
+    install_requires=['ssh2-python'],
+    #install_requires=['requests', 'ssh2', 'socket', 'getpass', 'argparse', 'datetime'],
     python_requires='>=3.6',
 )
