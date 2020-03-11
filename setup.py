@@ -7,7 +7,7 @@ setuptools.setup(
     name="Bonescan",
     version="0.1",
     author="Lucas Hubbard",
-    author_email="lehubbard@protonmail.com",
+    author_email="lhubbar9@emich.edu",
     description="A vulnerability scanner for the BeagleBoard",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -18,6 +18,6 @@ setuptools.setup(
         "Operating System :: Linux",
     ],
     install_requires=['ssh2-python', 'requests'],
-    
+
     python_requires='>=3.6',
 )
