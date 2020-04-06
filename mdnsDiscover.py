@@ -3,7 +3,7 @@ import signal
 
 class mdnsDiscover:
     def __init__(self):
-        self.domain = 'beasglebone'
+        self.domain = 'beaglebone'
         self.tld = '.local'
     def timeout(signum, frame):
         pass

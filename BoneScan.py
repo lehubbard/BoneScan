@@ -8,6 +8,8 @@ from distutils.util import strtobool
 
 #parse software info
 def ParseSoft (raw):
+    raw = str(raw)
+    raw = raw.replace("\\n", '\n')
     raw = raw.replace('~', "-")
     raw = raw.replace(':', "-")
     raw = raw.replace('+', "-")
@@ -62,11 +64,15 @@ def main():
     for i in range(len(ipLst)):
         ip = ipLst[i]
         password = getpass("Enter your BeagleBoard's password: ")
-
-        print('\nScanning device', (i+1), 'of', len(ipLst), '\n')
-        com = SSHComs(ip, user, password)
-        com.In('dpkg --list')
-        software = com.Out
+        com = SSHComs(ip, user)
+        #com = SSHComs(ip, user, password)
+        com.In('dpkg', '--list')
+        print('Scanning device', (i+1), 'of', len(ipLst), '\n')
+        software = com.out
+        # com2 = SSHComs(ip, user, password)
+        # com2.In('pwd')
+        # service = com2.out
+        # print(service)
 
         checkForVulnSoft(software)
 
