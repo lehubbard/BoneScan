@@ -1,11 +1,14 @@
 import datetime
+import os
 
-class reportGen:
-    def __init__ (self, vuln):
+class report:
+    def __init__ (self):
+        self.vulnPresent = False
         self.date = datetime.datetime.now()
-        self.vuln = vuln
+        self.create()
 
-    def write(self):
+
+    def create(self):
         self.html = f"""<!doctype self.html>
         <self.html lang="en">
         <head>
@@ -24,20 +27,33 @@ class reportGen:
             </div>
           </div>
 
-          <div class="results">
-            <h3>{len(self.vuln)} potential vulnerabilities found</h3>\n"""
+          <div class="results"> """
 
+        if self.vulnPresent:
+            self.html = self.html + self.vuln
+
+        if not self.vulnPresent:
+            message = '<h3>Congratulations, no vulnerabilities were found!</h3>'
+            self.html = self.html + message
+
+        self.html = self.html + '</div>\n</body>'
+
+    def vulnSoft(self, vuln):
+        self.vuln = vuln
+        if len(self.vuln) > 0:
+            self.vulnPresent = True
+
+        head = '<h3>{len(self.vuln)} potential vulnerabilities found</h3>\n'
+        #format vulnerable software list
         for line in self.vuln:
             line[2] = line[2].replace('[', '')
             line[2] = line[2].replace(']', '')
             line[2] = line[2].replace('"', '')
             line[2] = line[2].replace("'", '')
-            self.html = self.html + '\t\t<p>' + line[0] + ' ' + line[1] + ': ' + line[2] + '</p>\n'
+            self.vuln = head + '\t\t<p>' + line[0] + ' ' + line[1] + ': ' + line[2] + '</p>\n'
 
-        self.html = self.html + """  </div>
-        </body>
-        </self.html>
-                """
+
+    def write(self):
         self.filename = 'report-' + str(self.date)
         self.filename = self.filename.replace(' ', '-')
         self.filename = self.filename.replace('.', '-')
@@ -47,3 +63,5 @@ class reportGen:
         file = open(self.filename, 'a')
         file.write(self.html)
         file.close()
+
+        print('\nReport written to ', os.getcwd(), '/report', self.filename, sep = '')

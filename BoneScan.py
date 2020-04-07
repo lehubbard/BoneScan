@@ -1,14 +1,12 @@
 from SSHComs import SSHComs
-from getpass import getpass
 from CVECheck import CVECheck
-from report import reportGen
+from report import report
 from mdnsDiscover import mdnsDiscover
 import argparse
 from distutils.util import strtobool
 
 #parse software info
 def ParseSoft (raw):
-    raw = str(raw)
     raw = raw.replace("\\n", '\n')
     raw = raw.replace('~', "-")
     raw = raw.replace(':', "-")
@@ -38,13 +36,19 @@ def checkForVulnSoft(software):
     software = ParseSoft(software)
     vulnSoft = []
 
-    for line in software:
-        print ('Scanning', line[0], line[1])
-        cve = CVECheck(line[0], line[1])
+    for i in range(3):
+        print ('Scanning', software[i][0], software[i][1])
+        cve = CVECheck(software[i][0], software[i][1])
         if len(cve.IDList) > 0:
-            vulnSoft.append([line[0], line[1], str(cve.IDList)])
+            vulnSoft.append([software[i][0], software[i][1], str(cve.IDList)])
+    # for line in software:
+    #     print ('Scanning', line[0], line[1])
+    #     cve = CVECheck(line[0], line[1])
+    #     if len(cve.IDList) > 0:
+    #         vulnSoft.append([line[0], line[1], str(cve.IDList)])
 
-    re = reportGen(vulnSoft)
+    re = report()
+    re.vulnSoft(vulnSoft)
     re.write()
 
 def main():
@@ -63,16 +67,16 @@ def main():
 
     for i in range(len(ipLst)):
         ip = ipLst[i]
-        password = getpass("Enter your BeagleBoard's password: ")
         com = SSHComs(ip, user)
-        #com = SSHComs(ip, user, password)
-        com.In('dpkg', '--list')
+        if com.passEnabled:
+            pass
+        software = com.In('dpkg --list')
         print('Scanning device', (i+1), 'of', len(ipLst), '\n')
-        software = com.out
-        # com2 = SSHComs(ip, user, password)
-        # com2.In('pwd')
-        # service = com2.out
-        # print(service)
+
+
+
+
+
 
         checkForVulnSoft(software)
 

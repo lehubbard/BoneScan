@@ -1,48 +1,56 @@
-import socket
-from ssh2.session import Session
 from getpass import getpass
-from pathlib import Path
 import spur
 import spur.ssh
+from distutils.util import strtobool
 
 class SSHComs:
 
     def __init__(self, ip, user):
         self.ip = ip
         self.user = user
-
-    def In(self, command, opt):
+        self.passEnabled = False
         print('Establishing connection to ', self.user, '@', self.ip, sep='')
-        # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # sock.connect((self.ip, 22))
-        #
-        # session = Session()
-        # session.handshake(sock)
-        # path = str(Path.home()) + '/.ssh/id_ed25519.pub'
-        # f = open(path, 'r')
-        # print(f)
-        # # pKey = open(path, 'rb')
-        # # pKeyBytes = pKey.read()
-        # session.userauth_publickey_fromfile(self.user, path)
-        #
-        #
-        #
-        # #session.userauth_password(self.user, self.password)
-        #
-        # channel = session.open_session()
-        # channel.execute(command)
-        # size, data = channel.read()
-        # self.Out = ''
-        # while size > 0:
-        #     self.Out += data.decode()
-        #     size, data = channel.read()
-        #
-        # channel.close()
-        # print("Exiting with Status: {0}".format(channel.get_exit_status()))
-        # print()
-        path = str(Path.home()) + '/.ssh/id_ed25519.pub'
-        shell = spur.SshShell(hostname = self.ip, username = self.user, private_key_file = path)
+        self.login('key')
 
-        result = shell.run([command, opt])
-        self.out = result.output
-        shell.close()
+    def login(self, opt):
+        if opt == 'key':
+            self.shell = spur.SshShell(hostname = self.ip, username = self.user)
+        elif opt == 'pass':
+            self.password = getpass("\nEnter your BeagleBoard's password: ")
+            self.shell = spur.SshShell(hostname = self.ip, username = self.user, password = self.password)
+            self.passEnabled = True
+        else:
+             raise Exception('Bad input')
+
+    def checkConnection(self):
+        try:
+            connected = self.shell.run(['pwd'])
+            return True
+        except:
+            return False
+
+    def choose(self, message):
+        choice = input(message)
+        choice = strtobool(choice)
+        if choice:
+            return choice
+        else:
+            quit()
+
+    def In(self, command):
+        connected = self.checkConnection()
+        while not connected:
+            choice = self.choose('Login failed. \nWould you like to enter a password? (yes or no) ')
+            self.login('pass')
+
+        #parse and run command
+        command = command.split()
+        if len(command) > 1:
+            result = self.shell.run([command[0], command[1]])
+        else:
+            result = self.shell.run([command[0]])
+
+        return str(result.output)
+
+    def endSession(self):
+        self.shell.close()
