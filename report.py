@@ -2,7 +2,8 @@ import datetime
 import os
 
 class report:
-    def __init__ (self):
+    def __init__ (self, ipLst):
+        self.ipLst = ipLst
         self.vulnPresent = False
         self.date = datetime.datetime.now()
         self.create()

@@ -2,6 +2,7 @@ from getpass import getpass
 import spur
 import spur.ssh
 from distutils.util import strtobool
+import traceback
 
 class SSHComs:
 
@@ -9,6 +10,7 @@ class SSHComs:
         self.ip = ip
         self.user = user
         self.passEnabled = False
+        self.defPass = self.isPassDefault()
         print('Establishing connection to ', self.user, '@', self.ip, sep='')
         self.login('key')
 
@@ -22,11 +24,20 @@ class SSHComs:
         else:
              raise Exception('Bad input')
 
+    def isPassDefault(self):
+        self.shell = spur.SshShell(hostname = self.ip, username = self.user, password = 'temppwd')
+        if self.checkConnection():
+            return True
+            self.endSession()
+        else:
+            return False
+
     def checkConnection(self):
         try:
             connected = self.shell.run(['pwd'])
             return True
         except:
+            #traceback.print_exc()
             return False
 
     def choose(self, message):
@@ -42,6 +53,8 @@ class SSHComs:
         while not connected:
             choice = self.choose('Login failed. \nWould you like to enter a password? (yes or no) ')
             self.login('pass')
+            connected = self.checkConnection()
+
 
         #parse and run command
         command = command.split()
