@@ -1,10 +1,5 @@
 README.md
 setup.py
-BoneScan/BoneScan.py
-BoneScan/CVECheck.py
-BoneScan/SSHComs.py
-BoneScan/__init__.py
-BoneScan/report.py
 Bonescan.egg-info/PKG-INFO
 Bonescan.egg-info/SOURCES.txt
 Bonescan.egg-info/dependency_links.txt

@@ -17,7 +17,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Operating System :: Linux",
     ],
-    install_requires=['spur', 'requests', 'signal'],
+    install_requires=['spur', 'requests'],
 
     python_requires='>=3.6',
 )
