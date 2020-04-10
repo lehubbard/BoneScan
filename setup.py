@@ -17,7 +17,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Operating System :: Linux",
     ],
-    install_requires=['ssh2-python', 'requests'],
+    install_requires=['spur', 'requests', 'signal'],
 
     python_requires='>=3.6',
 )
