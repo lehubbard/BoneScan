@@ -2,7 +2,6 @@ from getpass import getpass
 import spur
 import spur.ssh
 from distutils.util import strtobool
-import traceback
 
 class SSHComs:
 
@@ -58,10 +57,12 @@ class SSHComs:
 
         #parse and run command
         command = command.split()
-        if len(command) > 1:
-            result = self.shell.run([command[0], command[1]])
+        if len(command) > 1 and len(command) < 3:
+            result = self.shell.run([command[0], command[1]], allow_error=True)
+        elif len(command) > 2:
+            result = self.shell.run([command[0], command[1], command[2]], allow_error=True)
         else:
-            result = self.shell.run([command[0]])
+            result = self.shell.run([command[0]], allow_error=True)
 
         return str(result.output)
 

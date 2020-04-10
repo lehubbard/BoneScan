@@ -40,16 +40,35 @@ logo{
 
 .results{
   display: flex;
-  align-items: center;
   flex-direction: column;
   margin-left: 10em;
   margin-right: 10em;
   padding-top: 2em;
   border-top: 1px solid black;
+  align-items: flex-start;
 }
 .results h3{
   font-family: 'Noto Sans TC', sans-serif;
+
+}
+
+.results h2{
+  font-family: 'Roboto', sans-serif;
+  align-self: center;
+
 }
 .results p{
+  font-family: 'Roboto', sans-serif;
+}
+.results ul{
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.results a{
+  color: #cb5621;
+  margin-top: 5em;
+  text-decoration: none;
+  align-self: center;
   font-family: 'Roboto', sans-serif;
 }
