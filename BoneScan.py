@@ -45,7 +45,10 @@ def netstatParse(raw):
         listening.append([port[0], port[3]])
     return listening
 
-
+def getIP():
+    ipLst = input('Enter the IP addresses of the devices you would like scanned seperated by a space. ')
+    ipLst = ipLst.split()
+    return ipLst
 
 def checkForVulnSoft(software):
     software = ParseSoft(software)
