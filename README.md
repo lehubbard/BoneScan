@@ -18,5 +18,5 @@ BoneScan is a vulnerability scanner that offers users detailed information on th
 * On the administrative device, run BoneScan.py as shown below.
 
 * `python BoneScan.py`
-* After the scan is completed, the results will be stored in `./report.{filename}.html`
+* After the scan is completed, the results will be stored in `./report/{filename}.html`
 * the --cve modifier can be used to scan for vulnerabilities related to installed software.
