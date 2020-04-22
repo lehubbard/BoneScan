@@ -54,12 +54,6 @@ def checkForVulnSoft(software):
     software = ParseSoft(software)
     vulnSoft = []
 
-    # #!!!!!!!!!!!!!! remove this before submission !!!!!!!!!!
-    # for i in range(15):
-    #     print ('Scanning', software[i][0], software[i][1])
-    #     cve = CVECheck(software[i][0], software[i][1])
-    #     if len(cve.IDList) > 0:
-    #         vulnSoft.append([software[i][0], software[i][1], str(cve.IDList)])
     for line in software:
         print ('Scanning', line[0], line[1])
         cve = CVECheck(line[0], line[1])
